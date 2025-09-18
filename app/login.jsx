@@ -1,20 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
 import { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
-import { useRouter, Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 
-export default function Signup() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
   const router = useRouter();
 
-  const handleSignup = async () => {
+  const handleLogin = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push('/posts');
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push('/discover');
     } catch (error) {
       Alert.alert('Error', error.message);
     }
@@ -22,8 +21,8 @@ export default function Signup() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Create Account</Text>
-      <Text style={styles.subheading}>Start your travel journey</Text>
+      <Text style={styles.heading}>Welcome Back!</Text>
+      <Text style={styles.subheading}>Continue your travel journey</Text>
 
       <TextInput
         style={styles.input}
@@ -35,13 +34,6 @@ export default function Signup() {
       />
       <TextInput
         style={styles.input}
-        placeholder="Username"
-        placeholderTextColor="#90A4AE"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
         placeholder="Password"
         placeholderTextColor="#90A4AE"
         value={password}
@@ -49,13 +41,24 @@ export default function Signup() {
         secureTextEntry
       />
 
-      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-        <Text style={styles.signupText}>Sign Up</Text>
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <Text style={styles.loginText}>Log In</Text>
       </TouchableOpacity>
 
-      <Text style={styles.loginPrompt}>Already have an account?</Text>
-      <Link href="/login" style={styles.loginButton}>
-        <Text style={styles.loginText}>Log In</Text>
+      <TouchableOpacity style={styles.forgotpasswordButton}>
+        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.orText}>or join with</Text>
+
+      <TouchableOpacity style={[styles.socialButton]}>
+        <Text style={styles.socialText}>Continue with Google</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.signupPrompt}>New to WanderNest?</Text>
+
+      <Link href="/signup" style={styles.signupButton}>
+        <Text style={styles.signupText}>Sign Up</Text>
       </Link>
 
       <StatusBar style="auto" />
@@ -99,7 +102,7 @@ const styles = StyleSheet.create({
     color: '#2d3748',
     fontSize: 16,
   },
-  signupButton: {
+  loginButton: {
     backgroundColor: '#3182ce',
     paddingVertical: 10,
     borderRadius: 10,
@@ -111,29 +114,55 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    alignItems: 'center',
   },
-  signupText: {
+  loginText: {
     color: '#ffffff',
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
     letterSpacing: 0.5,
   },
-  loginPrompt: {
+  forgotPassword: {
+    color: '#4a5568',
+    marginBottom: 24,
+    textAlign: 'center',
+    fontSize: 14,
+  },
+  orText: {
+    marginVertical: 16,
+    textAlign: 'center',
+    color: '#718096',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  socialButton: {
+    backgroundColor: '#1a202c',
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginBottom: 12,
+    width: '100%',
+    maxWidth: 320,
+  },
+  socialText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  signupPrompt: {
     marginTop: 24,
     color: '#4a5568',
     fontSize: 14,
     textAlign: 'center',
   },
-  loginText: {
+  signupText: {
     color: '#3182ce',
     fontWeight: '600',
     fontSize: 16,
     marginTop: 8,
     textAlign: 'center',
   },
-  loginButton: {
+  signupButton: {
     backgroundColor: 'transparent',
     paddingVertical: 10,
     borderRadius: 10,

@@ -1,21 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Link } from 'expo-router'
+import { auth } from '../firebaseConfig'
 
 const Profile = () => {
+  const user = auth.currentUser;
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text className="text-4xl font-bold">HIIIIIII!!!!!!!!!!!</Text>
-        <Text style={styles.appName}>TravelBlog</Text>
+        <Text style={styles.appName}>Wander-Nest</Text>
         <Text style={styles.title}>My Profile</Text>
-        
+
         <View style={styles.profileBox}>
-          <Text style={styles.welcomeText}>Welcome back!</Text>
+          <Text style={styles.welcomeText}>Welcome back, {user ? user.email : 'Traveler'}!</Text>
           <Text style={styles.descriptionText}>Ready for your next adventure?</Text>
         </View>
 
-        <Link href="/" style={styles.link}>Return Home</Link>
+        <View style={styles.linkContainer}>
+          <Link href="/" style={styles.postsLink}>My Posts</Link>
+          <Link href="/" style={styles.link}>Return Home</Link>
+        </View>
       </View>
     </View>
   )

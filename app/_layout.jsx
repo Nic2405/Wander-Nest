@@ -43,10 +43,31 @@ if (!fontsLoaded && !error) {
           headerShown: true,
         }}
       />
-      <Stack.Screen 
-        name="signup" 
-        options={{ 
+      <Stack.Screen
+        name="signup"
+        options={{
           headerTitle: "Sign Up",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="login"
+        options={{
+          headerTitle: "Log In",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="posts"
+        options={{
+          headerTitle: "My Posts",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="discover"
+        options={{
+          headerTitle: "Discover",
           headerShown: true,
         }}
       />
