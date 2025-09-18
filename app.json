@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "travelblog",
-    "slug": "travelblog",
+    "name": "Wander-Nest",
+    "slug": "Wander-Nest",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,6 @@
     "plugins": [
       "expo-router"
     ],
-    "scheme": "travelblog"
+    "scheme": "Wander-Nest"
   }
 }
