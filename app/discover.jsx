@@ -4,6 +4,7 @@ import { db } from '../firebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Link } from 'expo-router';
 
+<<<<<<< HEAD
 const getTimeAgo = (date) => {
   const now = new Date();
   const diff = now - date.toDate();
@@ -16,6 +17,8 @@ const getTimeAgo = (date) => {
   return `${days}d ago`;
 };
 
+=======
+>>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
 export default function DiscoverScreen() {
   const [posts, setPosts] = useState([]);
 
@@ -36,6 +39,7 @@ export default function DiscoverScreen() {
 
   const renderPost = ({ item }) => (
     <View style={styles.post}>
+<<<<<<< HEAD
       <View style={styles.header}>
         <Image source={{ uri: 'https://via.placeholder.com/40' }} style={styles.avatar} />
         <View>
@@ -59,6 +63,16 @@ export default function DiscoverScreen() {
           <Text style={styles.buttonText}>💬 Comment</Text>
         </TouchableOpacity>
       </View>
+=======
+      {item.imageUrl && <Image source={{ uri: item.imageUrl }} style={styles.image} />}
+      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.content}>{item.content}</Text>
+      {item.location && (
+        <Text style={styles.location}>
+          Location: {item.location.latitude.toFixed(4)}, {item.location.longitude.toFixed(4)}
+        </Text>
+      )}
+>>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
     </View>
   );
 
@@ -105,6 +119,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+<<<<<<< HEAD
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -125,6 +140,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
   },
+=======
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+>>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
   title: {
     fontWeight: 'bold',
     fontSize: 18,
@@ -136,16 +159,20 @@ const styles = StyleSheet.create({
     color: '#4a5568',
     marginBottom: 10,
   },
+<<<<<<< HEAD
   image: {
     width: '100%',
     height: 200,
     borderRadius: 8,
     marginBottom: 10,
   },
+=======
+>>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
   location: {
     fontSize: 12,
     color: '#38a169',
     fontWeight: '600',
+<<<<<<< HEAD
     marginBottom: 10,
   },
   footer: {
@@ -164,6 +191,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 14,
     color: '#4a5568',
+=======
+>>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
   },
   backButton: {
     backgroundColor: '#3182ce',

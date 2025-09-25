@@ -5,7 +5,10 @@ import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where } 
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Link } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
+<<<<<<< HEAD
 import * as Location from 'expo-location';
+=======
+>>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Posts() {
