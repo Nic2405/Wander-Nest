@@ -4,7 +4,6 @@ import { db } from '../firebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Link } from 'expo-router';
 
-<<<<<<< HEAD
 const getTimeAgo = (date) => {
   const now = new Date();
   const diff = now - date.toDate();
@@ -17,8 +16,6 @@ const getTimeAgo = (date) => {
   return `${days}d ago`;
 };
 
-=======
->>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
 export default function DiscoverScreen() {
   const [posts, setPosts] = useState([]);
 
@@ -38,43 +35,35 @@ export default function DiscoverScreen() {
   };
 
   const renderPost = ({ item }) => (
-    <View style={styles.post}>
-<<<<<<< HEAD
-      <View style={styles.header}>
-        <Image source={{ uri: 'https://via.placeholder.com/40' }} style={styles.avatar} />
-        <View>
-          <Text style={styles.name}>{'Traveler ' + item.userId.slice(0, 5)}</Text>
-          <Text style={styles.time}>{getTimeAgo(item.createdAt)}</Text>
-        </View>
+  <View style={styles.post}>
+    <View style={styles.header}>
+      <Image source={{ uri: 'https://via.placeholder.com/40' }} style={styles.avatar} />
+      <View>
+        <Text style={styles.name}>{'Traveler ' + item.userId.slice(0, 5)}</Text>
+        <Text style={styles.time}>{getTimeAgo(item.createdAt)}</Text>
       </View>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.content}>{item.content}</Text>
-      {item.imageUrl && <Image source={{ uri: item.imageUrl }} style={styles.image} />}
-      {item.location && (
-        <Text style={styles.location}>
-          📍 {item.location.latitude.toFixed(4)}, {item.location.longitude.toFixed(4)}
-        </Text>
-      )}
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.button} onPress={() => alert('Liked!')}>
-          <Text style={styles.buttonText}>👍 Like</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => alert('Comments coming soon!')}>
-          <Text style={styles.buttonText}>💬 Comment</Text>
-        </TouchableOpacity>
-      </View>
-=======
-      {item.imageUrl && <Image source={{ uri: item.imageUrl }} style={styles.image} />}
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.content}>{item.content}</Text>
-      {item.location && (
-        <Text style={styles.location}>
-          Location: {item.location.latitude.toFixed(4)}, {item.location.longitude.toFixed(4)}
-        </Text>
-      )}
->>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
     </View>
-  );
+
+    <Text style={styles.title}>{item.title}</Text>
+    <Text style={styles.content}>{item.content}</Text>
+    {item.imageUrl && <Image source={{ uri: item.imageUrl }} style={styles.image} />}
+    {item.location && (
+      <Text style={styles.location}>
+        📍 {item.location.latitude.toFixed(4)}, {item.location.longitude.toFixed(4)}
+      </Text>
+    )}
+
+    <View style={styles.footer}>
+      <TouchableOpacity style={styles.button} onPress={() => alert('Liked!')}>
+        <Text style={styles.buttonText}>👍 Like</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => alert('Comments coming soon!')}>
+        <Text style={styles.buttonText}>💬 Comment</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+);
+
 
   return (
     <View style={styles.container}>
@@ -86,7 +75,7 @@ export default function DiscoverScreen() {
         contentContainerStyle={styles.list}
       />
       <Link href="/posts" style={styles.backButton}>
-        <Text style={styles.backButtonText}>Back to My Posts</Text>
+        <Text style={styles.backButtonText}>My Posts</Text>
       </Link>
     </View>
   );
@@ -96,7 +85,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f0f2f5',
+    backgroundColor: '#e6ecf0', // Soft blue-gray background
   },
   heading: {
     fontSize: 24,
@@ -110,16 +99,17 @@ const styles = StyleSheet.create({
   },
   post: {
     backgroundColor: '#ffffff',
-    borderRadius: 8,
+    borderRadius: 6, // Smaller border radius
+    borderWidth: 0.5, // Thin border
+    borderColor: '#d1d5db', // Light gray border
     padding: 15,
     marginBottom: 15,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
   },
-<<<<<<< HEAD
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -140,14 +130,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
   },
-=======
   image: {
     width: '100%',
     height: 200,
-    borderRadius: 8,
+    borderRadius: 6,
     marginBottom: 10,
   },
->>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
   title: {
     fontWeight: 'bold',
     fontSize: 18,
@@ -159,20 +147,10 @@ const styles = StyleSheet.create({
     color: '#4a5568',
     marginBottom: 10,
   },
-<<<<<<< HEAD
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-=======
->>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
   location: {
     fontSize: 12,
     color: '#38a169',
     fontWeight: '600',
-<<<<<<< HEAD
     marginBottom: 10,
   },
   footer: {
@@ -182,8 +160,10 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 10,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 5,
+    backgroundColor: '#f9fafb',
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '#d1d5db',
     flex: 1,
     marginHorizontal: 5,
     alignItems: 'center',
@@ -191,13 +171,11 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 14,
     color: '#4a5568',
-=======
->>>>>>> e52287c5399c2882f9bb93058a560c59118bae7e
   },
   backButton: {
     backgroundColor: '#3182ce',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 6,
     alignItems: 'center',
     marginTop: 10,
   },

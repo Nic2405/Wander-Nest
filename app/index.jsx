@@ -26,11 +26,11 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a2a3a',
+    backgroundColor: '#0f2027', // Deeper, more elegant background
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(26, 42, 58, 0.7)',
+    backgroundColor: 'rgba(15, 32, 39, 0.6)', // Slightly darker overlay
   },
   content: {
     flex: 1,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#64B5F6',
     marginBottom: 15,
     textTransform: 'uppercase',
@@ -51,16 +51,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   appName: {
-    fontSize: 52,
+    fontSize: 56,
     fontWeight: 'bold',
     color: '#ffffff',
     marginBottom: 15,
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowOffset: { width: 0, height: 3 },
+    textShadowRadius: 6,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 17,
     color: '#90CAF9',
     letterSpacing: 1,
     fontWeight: '500',
@@ -72,24 +72,24 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   link: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
     color: '#ffffff',
     fontSize: 18,
-    padding: 16,
+    padding: 14,
     width: '100%',
-    borderRadius: 12,
+    borderRadius: 8, // Smaller, cleaner border radius
     overflow: 'hidden',
     textAlign: 'center',
-    borderWidth: 1,
+    borderWidth: 0.5, // Thin border
     borderColor: 'rgba(255, 255, 255, 0.2)',
   },
   specialLink: {
     backgroundColor: '#64B5F6',
     color: '#ffffff',
     fontSize: 18,
-    padding: 16,
+    padding: 14,
     width: '100%',
-    borderRadius: 12,
+    borderRadius: 8,
     overflow: 'hidden',
     textAlign: 'center',
     shadowColor: '#000',
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 4,
   },
 });
