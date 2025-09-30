@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, ImageBackground } from 'react-native';
 import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
@@ -21,61 +21,72 @@ export default function Signup() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Create Account</Text>
-      <Text style={styles.subheading}>Start your travel journey</Text>
+    <ImageBackground
+      source={require('../assets/travel_background.jpg')}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        <Text style={styles.heading}>Create Account</Text>
+        <Text style={styles.subheading}>Start your travel journey</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email Address"
-        placeholderTextColor="#90A4AE"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        placeholderTextColor="#90A4AE"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor="#90A4AE"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Email Address"
+          placeholderTextColor="#90A4AE"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          placeholderTextColor="#90A4AE"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#90A4AE"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
 
-      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-        <Text style={styles.signupText}>Sign Up</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+          <Text style={styles.signupText}>Sign Up</Text>
+        </TouchableOpacity>
 
-      <Text style={styles.loginPrompt}>Already have an account?</Text>
-      <Link href="/login" style={styles.loginButton}>
-        <Text style={styles.loginText}>Log In</Text>
-      </Link>
+        <Text style={styles.loginPrompt}>Already have an account?</Text>
+        <Link href="/login" style={styles.loginButton}>
+          <Text style={styles.loginText}>Log In</Text>
+        </Link>
 
-      <StatusBar style="auto" />
-    </View>
+        <StatusBar style="auto" />
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f2f5',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     paddingHorizontal: 24,
     paddingVertical: 40,
   },
   heading: {
     fontSize: 36,
     fontWeight: '800',
-    color: '#2b6cb0',
+    color: '#6b46c1',
     marginBottom: 12,
     textAlign: 'center',
     letterSpacing: 0.5,
@@ -100,7 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   signupButton: {
-    backgroundColor: '#3182ce',
+    backgroundColor: '#6b46c1',
     paddingVertical: 10,
     borderRadius: 10,
     marginBottom: 10,
@@ -127,7 +138,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   loginText: {
-    color: '#3182ce',
+    color: '#6b46c1',
     fontWeight: '600',
     fontSize: 16,
     marginTop: 8,

@@ -1,3 +1,5 @@
+
+
 import 'expo-router/entry';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
@@ -5,7 +7,11 @@ import { Link } from 'expo-router';
 
 export default function Home() {
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require('../assets/high_quality_travel.gif')}
+      style={styles.container}
+      resizeMode="cover"
+    >
       <View style={styles.overlay} />
       <View style={styles.content}>
         <View style={styles.headerContainer}>
@@ -19,18 +25,20 @@ export default function Home() {
         </View>
       </View>
       <StatusBar style="light" />
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0f2027', // Deeper, more elegant background
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#0f2027', // Deep charcoal background
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(15, 32, 39, 0.6)', // Slightly darker overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Darker overlay
   },
   content: {
     flex: 1,
@@ -44,7 +52,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    color: '#64B5F6',
+    color: '#8dc8f0ff', // Soft blue
     marginBottom: 15,
     textTransform: 'uppercase',
     letterSpacing: 4,
@@ -55,13 +63,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ffffff',
     marginBottom: 15,
-    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowColor: 'rgba(0, 0, 0, 0.6)',
     textShadowOffset: { width: 0, height: 3 },
     textShadowRadius: 6,
   },
   subtitle: {
     fontSize: 17,
-    color: '#90CAF9',
+    color: '#64d4f6ff', // Brighter accent blue
     letterSpacing: 1,
     fontWeight: '500',
   },
@@ -72,19 +80,19 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   link: {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    color: '#ffffff',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)', // Subtle contrast
+    color: '#E3F2FD', // Light blue text
     fontSize: 18,
     padding: 14,
     width: '100%',
-    borderRadius: 8, // Smaller, cleaner border radius
+    borderRadius: 8,
     overflow: 'hidden',
     textAlign: 'center',
-    borderWidth: 0.5, // Thin border
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderWidth: 0.3, // Smaller border width
+    borderColor: 'rgba(255, 255, 255, 0.15)',
   },
   specialLink: {
-    backgroundColor: '#64B5F6',
+    backgroundColor: '#1E88E5', // Stronger blue for emphasis
     color: '#ffffff',
     fontSize: 18,
     padding: 14,
@@ -97,8 +105,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 4,
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
