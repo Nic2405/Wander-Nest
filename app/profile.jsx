@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Link } from 'expo-router'
 import { auth } from '../firebaseConfig'
+import Logout from './logout'
 
 const Profile = () => {
   const user = auth.currentUser;
@@ -20,10 +21,12 @@ const Profile = () => {
         <View style={styles.linkContainer}>
           <Link href="/" style={styles.postsLink}>My Posts</Link>
           <Link href="/" style={styles.link}>Return Home</Link>
+          <Logout />
         </View>
       </View>
     </View>
   )
+  
 }
 
 export default Profile
@@ -71,19 +74,19 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 28,
-    color: '#2b6cb0',
+    color: '#6b46c1',
     fontWeight: '600',
     marginBottom: 12,
     textAlign: 'center',
   },
   descriptionText: {
     fontSize: 16,
-    color: '#718096',
+    color: '#2d3748',
     textAlign: 'center',
     lineHeight: 24,
   },
   link: {
-    backgroundColor: '#3182ce',
+    backgroundColor: '#6b46c1',
     paddingVertical: 15,
     paddingHorizontal: 32,
     borderRadius: 12,

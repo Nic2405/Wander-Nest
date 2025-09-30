@@ -1,14 +1,61 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
-import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, ImageBackground } from 'react-native';
+import { useState, useEffect } from 'react';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { Link, useRouter } from 'expo-router';
+import * as AuthSession from 'expo-auth-session';
+import * as WebBrowser from 'expo-web-browser';
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+
+  const [request, response, promptAsync] = AuthSession.useAuthRequest(
+    {
+      clientId: '437352622650-2pj930cts2k2ak8b462cqerv0a5ht73p.apps.googleusercontent.com', 
+      scopes: ['openid', 'profile', 'email'],
+      responseType: AuthSession.ResponseType.Code,
+      redirectUri: AuthSession.makeRedirectUri({
+        useProxy: true,
+      }),
+      usePKCE: true,
+    },
+    { authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth' }
+  );
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { code } = response.params;
+      const getTokenAndSignIn = async () => {
+        try {
+          // Exchange the authorization code for an ID token and access token
+          const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+              code,
+              client_id: '437352622650-2pj930cts2k2ak8b462cqerv0a5ht73p.apps.googleusercontent.com',
+              redirect_uri: AuthSession.makeRedirectUri({ useProxy: true }),
+              grant_type: 'authorization_code',
+            }).toString(),
+          });
+          const { id_token } = await tokenResponse.json();
+          const credential = GoogleAuthProvider.credential(id_token);
+          await signInWithCredential(auth, credential);
+          router.push('/discover');
+        } catch (error) {
+          Alert.alert('Error', error.message);
+        }
+      };
+      getTokenAndSignIn();
+    }
+  }, [response]);
 
   const handleLogin = async () => {
     try {
@@ -20,9 +67,15 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Welcome Back!</Text>
-      <Text style={styles.subheading}>Continue your travel journey</Text>
+    <ImageBackground
+      source={require('../assets/login_travel_background2.jpg')}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay} />
+      <View style={styles.contentContainer}>
+        <Text style={styles.heading}>Welcome Back!</Text>
+        <Text style={styles.subheading}>Continue your travel journey</Text>
 
       <TextInput
         style={styles.input}
@@ -51,7 +104,7 @@ export default function Login() {
 
       <Text style={styles.orText}>or join with</Text>
 
-      <TouchableOpacity style={[styles.socialButton]}>
+      <TouchableOpacity style={[styles.socialButton]} onPress={() => promptAsync()}>
         <Text style={styles.socialText}>Continue with Google</Text>
       </TouchableOpacity>
 
@@ -62,16 +115,25 @@ export default function Login() {
       </Link>
 
       <StatusBar style="auto" />
-    </View>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(245, 240, 230, 0.7)', // Semi-transparent beige overlay for readability
+  },
+  contentContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#edf2f7', // Softer neutral tone
     paddingHorizontal: 24,
     paddingVertical: 40,
   },
@@ -103,7 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   loginButton: {
-    backgroundColor: '#2b6cb0',
+    backgroundColor: '#6b46c1',
     paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 12,
@@ -156,7 +218,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   signupText: {
-    color: '#2b6cb0',
+    color: '#6b46c1',
     fontWeight: '600',
     fontSize: 15,
     marginTop: 6,

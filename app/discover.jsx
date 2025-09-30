@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2b6cb0',
+    color: '#6b46c1',
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -98,18 +98,18 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   post: {
-    backgroundColor: '#ffffff',
-    borderRadius: 6, // Smaller border radius
-    borderWidth: 0.5, // Thin border
-    borderColor: '#d1d5db', // Light gray border
-    padding: 15,
-    marginBottom: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 2,
-  },
+  backgroundColor: 'linear-gradient(180deg, #ffffff, #f7fafc)', // Soft gradient
+  borderRadius: 8, // Slightly more rounded corners
+  borderWidth: 0.25, // Very thin border
+  borderColor: '#cbd5e0', // Muted gray-blue border
+  padding: 12,
+  marginBottom: 12,
+  shadowColor: '#2d3748',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.06,
+  shadowRadius: 4,
+  elevation: 3,
+},
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#2b6cb0',
+    color: '#6b46c1',
   },
   time: {
     fontSize: 12,
@@ -139,11 +139,11 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: '#2b6cb0',
+    color: '#6b46c1',
     marginBottom: 5,
   },
   content: {
-    fontSize: 14,
+    fontSize: 18,
     color: '#4a5568',
     marginBottom: 10,
   },
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     color: '#4a5568',
   },
   backButton: {
-    backgroundColor: '#3182ce',
+    backgroundColor: '#6b46c1',
     padding: 15,
     borderRadius: 6,
     alignItems: 'center',

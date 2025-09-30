@@ -6,8 +6,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Link } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 
-import * as Location from 'expo-location';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Posts() {
@@ -16,7 +14,6 @@ export default function Posts() {
   const [content, setContent] = useState('');
   const [notes, setNotes] = useState('');
   const [image, setImage] = useState(null);
-  const [location, setLocation] = useState(null);
   const [isPublic, setIsPublic] = useState(true);
   const [isDraft, setIsDraft] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -66,13 +63,9 @@ export default function Posts() {
   const requestPermissions = async () => {
     const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
     const { status: libraryStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    const { status: locationStatus } = await Location.requestForegroundPermissionsAsync();
 
     if (cameraStatus !== 'granted' || libraryStatus !== 'granted') {
       Alert.alert('Permissions needed', 'Camera and media library permissions are required for photo uploads.');
-    }
-    if (locationStatus !== 'granted') {
-      Alert.alert('Location permission needed', 'Location permission is required for adding location to posts.');
     }
   };
 
@@ -114,24 +107,7 @@ export default function Posts() {
     }
   };
 
-  const getCurrentLocation = async () => {
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permission denied', 'Location permission is required.');
-        return;
-      }
 
-      const location = await Location.getCurrentPositionAsync({});
-      setLocation({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
-      Alert.alert('Success', 'Location captured!');
-    } catch (error) {
-      Alert.alert('Error', 'Failed to get location: ' + error.message);
-    }
-  };
 
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
@@ -150,7 +126,6 @@ export default function Posts() {
       content,
       notes,
       image,
-      location,
       isPublic,
       createdAt: new Date().toISOString(),
     };
@@ -164,7 +139,6 @@ export default function Posts() {
     setContent('');
     setNotes('');
     setImage(null);
-    setLocation(null);
     setIsPublic(true);
 
     Alert.alert('Success', 'Draft saved!');
@@ -186,7 +160,6 @@ export default function Posts() {
     setContent(draft.content || '');
     setNotes(draft.notes || '');
     setImage(draft.image || null);
-    setLocation(draft.location || null);
     setIsPublic(draft.isPublic !== undefined ? draft.isPublic : true);
   };
 
@@ -218,7 +191,6 @@ export default function Posts() {
         content,
         notes,
         imageUrl,
-        location,
         isPublic,
         userId: auth.currentUser.uid,
         createdAt: new Date(),
@@ -231,7 +203,6 @@ export default function Posts() {
       setContent('');
       setNotes('');
       setImage(null);
-      setLocation(null);
       setIsPublic(true);
 
       fetchPosts();
@@ -246,7 +217,6 @@ export default function Posts() {
     setContent(post.content);
     setNotes(post.notes || '');
     setImage(post.imageUrl ? { uri: post.imageUrl } : null);
-    setLocation(post.location || null);
     setIsPublic(post.isPublic !== undefined ? post.isPublic : true);
     setEditingId(post.id);
   };
@@ -295,15 +265,6 @@ export default function Posts() {
         <Text style={styles.imagePickerText}>{image ? 'Change Photo' : 'Add Photo'}</Text>
       </TouchableOpacity>
       {image && <Image source={{ uri: image.uri }} style={styles.imagePreview} />}
-
-      <TouchableOpacity style={styles.locationButton} onPress={getCurrentLocation}>
-        <Text style={styles.locationButtonText}>Add Location</Text>
-      </TouchableOpacity>
-      {location && (
-        <Text style={styles.locationText}>
-          Location: {location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}
-        </Text>
-      )}
 
       <View style={styles.visibilityContainer}>
         <Text style={styles.visibilityLabel}>Public</Text>
@@ -361,12 +322,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f0f2f5',
+    backgroundColor: '#f7fafc',
   },
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2b6cb0',
+    color: '#6b46c1',
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -379,7 +340,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   addButton: {
-    backgroundColor: '#3182ce',
+    backgroundColor: '#6b46c1',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
@@ -407,12 +368,12 @@ const styles = StyleSheet.create({
   postTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2b6cb0',
+    color: '#6b46c1',
     marginBottom: 5,
   },
   postContent: {
     fontSize: 14,
-    color: '#4a5568',
+    color: '#2d3748',
     marginBottom: 10,
   },
   postActions: {
@@ -441,7 +402,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   link: {
-    backgroundColor: '#3182ce',
+    backgroundColor: '#6b46c1',
     padding: 15,
     borderRadius: 8,
     color: '#ffffff',
@@ -451,14 +412,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   imagePicker: {
-    backgroundColor: '#e2e8f0',
+    backgroundColor: '#f7fafc',
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 10,
   },
   imagePickerText: {
-    color: '#4a5568',
+    color: '#2d3748',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -468,25 +429,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
   },
-  locationButton: {
-    backgroundColor: '#38a169',
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  locationButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  locationText: {
-    fontSize: 14,
-    color: '#38a169',
-    fontWeight: '600',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
   visibilityContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -495,19 +437,19 @@ const styles = StyleSheet.create({
   },
   visibilityLabel: {
     fontSize: 16,
-    color: '#4a5568',
+    color: '#2d3748',
     fontWeight: '600',
   },
   subHeading: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2b6cb0',
+    color: '#6b46c1',
     marginTop: 20,
     marginBottom: 10,
   },
   noDrafts: {
     fontSize: 14,
-    color: '#718096',
+    color: '#2d3748',
     textAlign: 'center',
     marginBottom: 10,
   },
@@ -525,7 +467,7 @@ const styles = StyleSheet.create({
   draftTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#2b6cb0',
+    color: '#6b46c1',
     marginBottom: 10,
   },
   draftActions: {
@@ -553,7 +495,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   navButton: {
-    backgroundColor: '#3182ce',
+    backgroundColor: '#6b46c1',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
@@ -565,7 +507,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   homeButton: {
-    backgroundColor: '#4a5568',
+    backgroundColor: '#2d3748',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
